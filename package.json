@@ -1,0 +1,60 @@
+{
+	"name": "n8n-nodes-warmysender",
+	"version": "0.1.0",
+	"description": "Email warmup and deliverability in n8n: mailbox health, warmup placement, email verification, suppression lists, campaign diagnostics, and a trigger for replies, bounces and opens.",
+	"license": "MIT",
+	"homepage": "https://github.com/fortuneflick/n8n-nodes-warmysender#readme",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"warmysender",
+		"email warmup",
+		"deliverability",
+		"email verification",
+		"inbox placement"
+	],
+	"author": {
+		"name": "WarmySender",
+		"email": "hello@warmysender.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/fortuneflick/n8n-nodes-warmysender.git"
+	},
+	"bugs": {
+		"url": "https://github.com/fortuneflick/n8n-nodes-warmysender/issues"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/WarmySenderApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/WarmySender/WarmySender.node.js",
+			"dist/nodes/WarmySenderTrigger/WarmySenderTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "^0.51.3",
+		"eslint": "9.39.4",
+		"prettier": "3.8.3",
+		"release-it": "20.2.0",
+		"typescript": "5.9.3"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}
