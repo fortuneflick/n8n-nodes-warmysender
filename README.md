@@ -71,6 +71,13 @@ Built with `@n8n/node-cli` 0.51 for the n8n 1.x and 2.x node API (`n8nNodesApiVe
 
 **Rate limits** are per workspace, not per key. When throttled, the API answers 429 with `Retry-After`. Turn on **Retry On Fail** in the node settings for long runs.
 
+## Example workflows
+
+Import any of these in n8n (**Workflows → Import from File**), then pick your credential in each node:
+
+* [Daily warmup health check for every mailbox with WarmySender](examples/daily-warmup-health.json)
+* [Verify a list of email addresses with WarmySender](examples/verify-a-list.json)
+
 ## Resources
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
@@ -78,6 +85,10 @@ Built with `@n8n/node-cli` 0.51 for the n8n 1.x and 2.x node API (`n8nNodesApiVe
 * [OpenAPI spec](https://warmysender.com/api/v1/openapi.json)
 
 ## Version history
+
+### 0.1.1
+
+Get Many with Return All now keeps your filters on every page (before, Return All ignored them). Example workflows added.
 
 ### 0.1.0
 

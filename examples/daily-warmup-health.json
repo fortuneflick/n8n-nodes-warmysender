@@ -1,0 +1,124 @@
+{
+  "name": "Daily warmup health check for every mailbox with WarmySender",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Daily warmup health check\nEvery morning, read warmup stats for every mailbox and keep the ones with warmup on, so a Slack or email node can report placement and volume.",
+        "width": 380,
+        "height": 260
+      },
+      "id": "c850ba92-8d8d-53dc-8bfc-213b402132db",
+      "name": "Note ## Daily war",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "96887b5f-e97e-5454-84dd-4058dab19dac",
+      "name": "Every morning",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "warmup",
+        "operation": "getAllStats",
+        "returnAll": true
+      },
+      "id": "2c875531-d40a-538c-a1fa-ab5dbf1948cd",
+      "name": "Warmup stats",
+      "type": "n8n-nodes-warmysender.warmySender",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "credentials": {
+        "warmySenderApi": {
+          "id": "",
+          "name": "WarmySender account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "f1",
+              "leftValue": "={{ $json.warmup_enabled }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "02199aec-63b0-5f93-8dc6-016f2798a712",
+      "name": "Warmup on",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Every morning": {
+      "main": [
+        [
+          {
+            "node": "Warmup stats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Warmup stats": {
+      "main": [
+        [
+          {
+            "node": "Warmup on",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

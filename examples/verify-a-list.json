@@ -1,0 +1,125 @@
+{
+  "name": "Verify a list of email addresses with WarmySender",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Verify a list of addresses\nPaste addresses into the first node (or replace it with your form, sheet or CRM). Each address comes back valid, invalid, risky or unknown, with a reason. Unknown is never charged.",
+        "width": 380,
+        "height": 260
+      },
+      "id": "b9c0729f-0eec-54d3-84d9-72b1ceb39412",
+      "name": "Note ## Verify a ",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "54fcf7d3-c64e-502b-9a80-262c7eca61a1",
+      "name": "When clicking 'Execute workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"emails\": [\"nobody@example.com\", \"someone@example.org\"]\n}",
+        "options": {}
+      },
+      "id": "fe24f21b-c7d0-5d52-a35a-106a9c3e456e",
+      "name": "Addresses",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "emails",
+        "options": {
+          "destinationFieldName": "email"
+        }
+      },
+      "id": "3ed937df-2d44-5b86-92c4-46321b08cd1b",
+      "name": "One per item",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "verification",
+        "operation": "verify",
+        "email": "={{ $json.email }}"
+      },
+      "id": "bc150940-95cd-5d19-92de-947c10a1de6d",
+      "name": "Verify",
+      "type": "n8n-nodes-warmysender.warmySender",
+      "typeVersion": 1,
+      "position": [
+        660,
+        0
+      ],
+      "credentials": {
+        "warmySenderApi": {
+          "id": "",
+          "name": "WarmySender account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking 'Execute workflow'": {
+      "main": [
+        [
+          {
+            "node": "Addresses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Addresses": {
+      "main": [
+        [
+          {
+            "node": "One per item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One per item": {
+      "main": [
+        [
+          {
+            "node": "Verify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

@@ -71,7 +71,7 @@ export const mailboxDescription: INodeProperties[] = [
 				type: 'string',
 				placeholder: 'e.g. name@email.com',
 				default: '',
-				routing: { send: { type: 'query', property: 'email_address' } },
+				routing: { request: { qs: { email_address: '={{ $value }}' } } },
 			},
 			{
 				displayName: 'Warmup Enabled',
@@ -79,7 +79,7 @@ export const mailboxDescription: INodeProperties[] = [
 				type: 'boolean',
 				default: true,
 				description: 'Whether to return only mailboxes with warmup on (or only with it off)',
-				routing: { send: { type: 'query', property: 'warmup_enabled' } },
+				routing: { request: { qs: { warmup_enabled: '={{ $value }}' } } },
 			},
 		],
 	},
@@ -292,7 +292,7 @@ export const suppressionDescription: INodeProperties[] = [
 			{ name: 'Domain', value: 'domain' },
 			{ name: 'Email', value: 'email' },
 		],
-		routing: { send: { type: 'query', property: 'type', value: '={{ $value || undefined }}' } },
+		routing: { request: { qs: { type: '={{ $value || undefined }}' } } },
 	},
 ];
 
